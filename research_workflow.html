@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>系統性回顧 × 統合分析 — 研究流程 Skill 地圖</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4efe6;
+    --paper-deep:#ece4d6;
+    --ink:#22201c;
+    --ink-soft:#4a463e;
+    --ink-faint:#8a8377;
+    --cinnabar:#b23a2e;
+    --cinnabar-deep:#8f2c22;
+    --jade:#3f6b56;
+    --line:#cfc6b4;
+    --gold:#a98a4b;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Noto Sans TC",sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(circle at 12% 8%, rgba(178,58,46,.04), transparent 38%),
+      radial-gradient(circle at 88% 92%, rgba(63,107,86,.05), transparent 42%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- HEADER ---------- */
+  header{
+    max-width:1080px;margin:0 auto;padding:6rem 2rem 3rem;
+    position:relative;
+  }
+  .seal{
+    position:absolute;top:5rem;right:2rem;
+    width:96px;height:96px;border:2.5px solid var(--cinnabar);
+    border-radius:8px;color:var(--cinnabar);
+    display:flex;align-items:center;justify-content:center;
+    font-family:"Noto Serif TC";font-weight:900;font-size:1.55rem;
+    line-height:1.15;text-align:center;letter-spacing:.05em;
+    transform:rotate(-4deg);opacity:.92;
+    box-shadow:inset 0 0 0 4px var(--paper), inset 0 0 0 6px var(--cinnabar);
+    padding:6px;
+  }
+  @media(max-width:640px){.seal{display:none}}
+  .kicker{
+    font-family:"Spline Sans Mono",monospace;font-size:.72rem;
+    letter-spacing:.42em;text-transform:uppercase;color:var(--cinnabar);
+    font-weight:600;margin-bottom:1.6rem;
+  }
+  h1{
+    font-family:"Noto Serif TC";font-weight:900;
+    font-size:clamp(2.4rem,6vw,4.2rem);line-height:1.08;
+    letter-spacing:-.01em;margin-bottom:1.4rem;max-width:18ch;
+  }
+  h1 .en{
+    display:block;font-family:"Fraunces",serif;font-style:italic;
+    font-weight:400;font-size:.42em;color:var(--ink-soft);
+    letter-spacing:0;margin-top:.6rem;
+  }
+  .lede{
+    font-size:1.12rem;color:var(--ink-soft);max-width:58ch;
+    border-left:3px solid var(--cinnabar);padding-left:1.3rem;
+  }
+  .meta-row{
+    display:flex;flex-wrap:wrap;gap:1.4rem 2.4rem;margin-top:2.6rem;
+    font-family:"Spline Sans Mono",monospace;font-size:.78rem;
+    color:var(--ink-faint);letter-spacing:.04em;
+  }
+  .meta-row b{color:var(--ink);font-weight:600}
+
+  /* ---------- PIPELINE ---------- */
+  main{max-width:1080px;margin:0 auto;padding:2rem 2rem 6rem;position:relative}
+  .pipeline{position:relative;padding-left:0}
+
+  .stage{
+    position:relative;margin-bottom:1.4rem;
+    border:1px solid var(--line);border-radius:14px;
+    background:rgba(255,253,248,.62);
+    backdrop-filter:blur(2px);
+    overflow:hidden;
+    transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s, border-color .35s;
+  }
+  .stage:hover{
+    transform:translateY(-3px);
+    box-shadow:0 18px 40px -22px rgba(34,32,28,.5);
+    border-color:var(--gold);
+  }
+  .stage-head{
+    display:flex;align-items:baseline;gap:1.1rem;
+    padding:1.7rem 2rem 1rem;
+  }
+  .num{
+    font-family:"Fraunces",serif;font-weight:600;
+    font-size:2.3rem;line-height:1;color:var(--cinnabar);
+    min-width:1.8ch;
+  }
+  .stage-titles{flex:1}
+  .phase{
+    font-family:"Spline Sans Mono",monospace;font-size:.68rem;
+    letter-spacing:.3em;text-transform:uppercase;color:var(--ink-faint);
+    margin-bottom:.3rem;
+  }
+  .stage-titles h2{
+    font-family:"Noto Serif TC";font-weight:700;font-size:1.5rem;
+    letter-spacing:.01em;
+  }
+  .tag{
+    font-family:"Spline Sans Mono",monospace;font-size:.66rem;
+    letter-spacing:.08em;padding:.3rem .7rem;border-radius:99px;
+    border:1px solid currentColor;white-space:nowrap;align-self:center;
+  }
+  .tag.hub{color:var(--cinnabar)}
+  .tag.aux{color:var(--jade)}
+
+  .stage-body{padding:0 2rem 1.8rem}
+  .stage-desc{color:var(--ink-soft);font-size:.98rem;margin-bottom:1.2rem;max-width:64ch}
+
+  .skill{
+    border-top:1px dashed var(--line);
+    padding:1.1rem 0 .2rem;
+  }
+  .skill:first-child{border-top:none;padding-top:.4rem}
+  .skill-name{
+    font-family:"Spline Sans Mono",monospace;font-weight:600;
+    font-size:.95rem;color:var(--ink);
+    display:inline-flex;align-items:center;gap:.55rem;margin-bottom:.45rem;
+  }
+  .skill-name::before{
+    content:"";width:8px;height:8px;border-radius:2px;
+    background:var(--cinnabar);transform:rotate(45deg);flex-shrink:0;
+  }
+  .skill.j .skill-name::before{background:var(--jade)}
+  .skill.g .skill-name::before{background:var(--gold)}
+  .skill p{font-size:.92rem;color:var(--ink-soft);margin-bottom:.65rem;max-width:64ch}
+  .triggers{display:flex;flex-wrap:wrap;gap:.4rem}
+  .trig{
+    font-size:.74rem;font-family:"Noto Sans TC";font-weight:400;
+    background:var(--paper-deep);color:var(--ink-soft);
+    padding:.22rem .6rem;border-radius:6px;border:1px solid var(--line);
+  }
+
+  /* connector dots between stages */
+  .connector{
+    height:1.4rem;display:flex;justify-content:center;align-items:center;
+    margin:-.2rem 0 .2rem;
+  }
+  .connector::before{
+    content:"";width:1px;height:100%;
+    background:repeating-linear-gradient(var(--line),var(--line) 3px,transparent 3px,transparent 7px);
+  }
+
+  /* ---------- C1-C5 sub-flow ---------- */
+  .cflow{
+    display:grid;grid-template-columns:repeat(5,1fr);gap:.5rem;
+    margin-top:1rem;
+  }
+  @media(max-width:640px){.cflow{grid-template-columns:1fr 1fr}}
+  .cstep{
+    background:var(--paper-deep);border:1px solid var(--line);
+    border-radius:8px;padding:.7rem .6rem;text-align:center;
+    position:relative;
+  }
+  .cstep b{
+    display:block;font-family:"Fraunces",serif;color:var(--cinnabar);
+    font-size:1rem;font-weight:600;
+  }
+  .cstep span{font-size:.72rem;color:var(--ink-soft);line-height:1.35;display:block;margin-top:.2rem}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    max-width:1080px;margin:0 auto;padding:2rem 2rem 5rem;
+    border-top:2px solid var(--ink);
+  }
+  .foot-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:end}
+  @media(max-width:640px){.foot-grid{grid-template-columns:1fr}}
+  .foot-note{font-size:.85rem;color:var(--ink-faint);max-width:50ch}
+  .foot-mark{
+    font-family:"Fraunces",serif;font-style:italic;font-size:1.3rem;
+    color:var(--ink-soft);text-align:right;
+  }
+  @media(max-width:640px){.foot-mark{text-align:left}}
+
+  /* reveal animation */
+  .stage,.connector{opacity:0;transform:translateY(18px);animation:rise .7s forwards}
+  @keyframes rise{to{opacity:1;transform:translateY(0)}}
+  .pipeline>*:nth-child(1){animation-delay:.05s}
+  .pipeline>*:nth-child(2){animation-delay:.10s}
+  .pipeline>*:nth-child(3){animation-delay:.15s}
+  .pipeline>*:nth-child(4){animation-delay:.20s}
+  .pipeline>*:nth-child(5){animation-delay:.25s}
+  .pipeline>*:nth-child(6){animation-delay:.30s}
+  .pipeline>*:nth-child(7){animation-delay:.35s}
+  .pipeline>*:nth-child(8){animation-delay:.40s}
+  .pipeline>*:nth-child(9){animation-delay:.45s}
+  .pipeline>*:nth-child(n+10){animation-delay:.5s}
+  @media(prefers-reduced-motion:reduce){.stage,.connector{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="seal">系統<br>回顧</div>
+  <div class="kicker">CMU · Research Pipeline</div>
+  <h1>系統性回顧的<br>九個關卡
+    <span class="en">A Skill Map for Systematic Review &amp; Meta-Analysis</span>
+  </h1>
+  <p class="lede">從研究空缺確認、文獻搜尋、AI 篩選、PRISMA 流程、統計合併，到投稿前的最後稽核 — 帳號內這套 skill 把整條 SR／統合分析的工作鏈串成可逐關推進的流程。</p>
+  <div class="meta-row">
+    <span><b>9</b> 個研究 skill</span>
+    <span><b>1</b> 個總調度入口</span>
+    <span><b>5</b> 階段強制順序（C1→C5）</span>
+    <span><b>4</b> 個輔助產出工具</span>
+  </div>
+</header>
+
+<main>
+<div class="pipeline">
+
+  <!-- 0 HUB -->
+  <section class="stage">
+    <div class="stage-head">
+      <div class="num">0</div>
+      <div class="stage-titles">
+        <div class="phase">Orchestrator · 總調度</div>
+        <h2>流程導航器</h2>
+      </div>
+      <div class="tag hub">入口</div>
+    </div>
+    <div class="stage-body">
+      <p class="stage-desc">不確定從哪一步開始時，先進這裡。它會判斷目前所在的研究階段、給出對應行動建議，並分流呼叫下方各子 skill。</p>
+      <div class="skill">
+        <div class="skill-name">meta-analysis-workflow</div>
+        <p>SR／統合分析全流程的總入口與導航器，輸出整體 checklist 與進度追蹤表。</p>
+        <div class="triggers">
+          <span class="trig">我要做 meta 分析</span>
+          <span class="trig">SR 怎麼開始</span>
+          <span class="trig">幫我做系統性回顧</span>
+          <span class="trig">不知道從哪裡開始做 SR</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="connector"></div>
+
+  <!-- 1 GAP CHECK -->
+  <section class="stage">
+    <div class="stage-head">
+      <div class="num">1</div>
+      <div class="stage-titles">
+        <div class="phase">Gap Check · 前置查核</div>
+        <h2>研究空缺確認</h2>
+      </div>
+    </div>
+    <div class="stage-body">
+      <p class="stage-desc">動手搜尋前，先確認這個主題有沒有人做過、有沒有正在進行的試驗，避免重工並找出 research gap。</p>
+      <div class="skill j">
+        <div class="skill-name">cochrane-trials-check</div>
+        <p>查核 Cochrane Library 有無既有 SR／Protocol，並透過 ClinicalTrials.gov v2 REST API 取得已完成或進行中 RCT 的結構化資料（NCT 編號、期別、樣本數、主要終點），產出研究空缺確認報告。</p>
+        <div class="triggers">
+          <span class="trig">有沒有 Cochrane</span>
+          <span class="trig">查臨床試驗登記</span>
+          <span class="trig">research gap 確認</span>
+          <span class="trig">設計研究前查一下</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="connector"></div>
+
+  <!-- 2 SEARCH -->
+  <section class="stage">
+    <div class="stage-head">
+      <div class="num">2</div>
+      <div class="stage-titles">
+        <div class="phase">Search · 文獻搜尋</div>
+        <h2>多源文獻檢索</h2>
+      </div>
+    </div>
+    <div class="stage-body">
+      <p class="stage-desc">英文走 PubMed／PMC，中文走 CNKI；兩者都會把關鍵字拆解成多角度查詢策略，再去重整理成 PRISMA 友善的結構化報告。</p>
+      <div class="skill">
+        <div class="skill-name">pubmed-research-search</div>
+        <p>優先使用官方 PubMed MCP 工具取得真實 PMID、完整摘要與 PMC 全文，依 PICO／MeSH 分機制研究／系統性回顧／臨床試驗三組查詢，可經 CMU proxy 下載訂閱期刊全文。</p>
+        <div class="triggers">
+          <span class="trig">搜 PubMed</span>
+          <span class="trig">找 RCT</span>
+          <span class="trig">找 meta-analysis</span>
+          <span class="trig">下載 PMC 全文</span>
+        </div>
+      </div>
+      <div class="skill">
+        <div class="skill-name">cnki-research-search</div>
+        <p>搜尋知網真實收錄的中文期刊論文（含 CNKI 連結／DOI），中醫藥、中國本土研究等領域優先使用，可選擇性透過校園 VPN 下載 CAJ/PDF。</p>
+        <div class="triggers">
+          <span class="trig">搜知網</span>
+          <span class="trig">找中文文獻</span>
+          <span class="trig">CNKI 搜尋</span>
+          <span class="trig">查中醫藥研究</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="connector"></div>
+
+  <!-- 3 SCREENING -->
+  <section class="stage">
+    <div class="stage-head">
+      <div class="num">3</div>
+      <div class="stage-titles">
+        <div class="phase">Screening · 篩選</div>
+        <h2>AI 輔助文獻篩選</h2>
+      </div>
+    </div>
+    <div class="stage-body">
+      <p class="stage-desc">搜回來上百篇，用主動學習（active learning）大幅減少 title／abstract 篩選工時。</p>
+      <div class="skill j">
+        <div class="skill-name">asreview-screening</div>
+        <p>協助使用 ASReview LAB 進行 AI 輔助篩選：安裝指引、資料格式準備（CSV／RIS／XLSX）、操作 SOP，匯出 included／excluded 清單供 PRISMA 使用。</p>
+        <div class="triggers">
+          <span class="trig">幫我篩文獻</span>
+          <span class="trig">文獻太多怎麼篩</span>
+          <span class="trig">active learning 篩選</span>
+          <span class="trig">我有幾百篇要篩</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="connector"></div>
+
+  <!-- 4 PRISMA -->
+  <section class="stage">
+    <div class="stage-head">
+      <div class="num">4</div>
+      <div class="stage-titles">
+        <div class="phase">Flow Diagram · 流程圖</div>
+        <h2>PRISMA 篩選流程圖</h2>
+      </div>
+    </div>
+    <div class="stage-body">
+      <p class="stage-desc">把篩選各階段數字記錄下來，產出可直接嵌入論文的標準流程圖。</p>
+      <div class="skill g">
+        <div class="skill-name">prisma-flow</div>
+        <p>透過互動問答收集篩選數字，產生符合 PRISMA 2020 的 SVG 向量圖與 Markdown 摘要，支援「僅資料庫搜尋」與「含其他來源」兩種版本，並可產出篩選數字核對表。</p>
+        <div class="triggers">
+          <span class="trig">PRISMA 圖</span>
+          <span class="trig">幫我畫篩選流程</span>
+          <span class="trig">PRISMA 2020</span>
+          <span class="trig">文獻篩選圖</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="connector"></div>
+
+  <!-- 5 STATS -->
+  <section class="stage">
+    <div class="stage-head">
+      <div class="num">5</div>
+      <div class="stage-titles">
+        <div class="phase">Statistics · 統計合併</div>
+        <h2>統合分析運算</h2>
+      </div>
+    </div>
+    <div class="stage-body">
+      <p class="stage-desc">用 R 套件 <code style="font-family:'Spline Sans Mono',monospace">meta</code> 做定量合併，輸出圖表、結果解讀與論文撰寫用描述文字。</p>
+      <div class="skill g">
+        <div class="skill-name">r-meta-analysis</div>
+        <p>涵蓋資料格式準備、函數選擇（metacont／metabin／metagen／metacor／metarate）、隨機效應模型（REML）、forest plot、異質性（I²／τ²／Q）、subgroup、meta-regression、leave-one-out 敏感度分析，以及 funnel plot ＋ Egger's test ＋ trim-and-fill 發表偏誤檢定。</p>
+        <div class="triggers">
+          <span class="trig">跑 meta 分析</span>
+          <span class="trig">forest plot</span>
+          <span class="trig">Egger's test</span>
+          <span class="trig">subgroup analysis</span>
+          <span class="trig">leave-one-out</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="connector"></div>
+
+  <!-- 6 REFS -->
+  <section class="stage">
+    <div class="stage-head">
+      <div class="num">6</div>
+      <div class="stage-titles">
+        <div class="phase">Citation Check · 引用核對</div>
+        <h2>文獻引用核對</h2>
+      </div>
+    </div>
+    <div class="stage-body">
+      <p class="stage-desc">寫完 Introduction／Discussion 後，逐筆核對引用是否真實、相關、年份作者正確。</p>
+      <div class="skill">
+        <div class="skill-name">academic-reference-checker</div>
+        <p>核對引用文獻的作者名、年份與內容相關性，搜尋未提供原文的引用，建議替換低相關性文獻；輸出中文核對報告、英文修正版段落，以及可匯入 EndNote／Zotero 的清單。</p>
+        <div class="triggers">
+          <span class="trig">確認引用</span>
+          <span class="trig">核對文獻</span>
+          <span class="trig">verify citations</span>
+          <span class="trig">這段引用對嗎</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="connector"></div>
+
+  <!-- 7 MANUSCRIPT REVIEW -->
+  <section class="stage">
+    <div class="stage-head">
+      <div class="num">7</div>
+      <div class="stage-titles">
+        <div class="phase">Final Audit · 投稿前防線</div>
+        <h2>稿件嚴謹修稿</h2>
+      </div>
+    </div>
+    <div class="stage-body">
+      <p class="stage-desc">投稿前最後一關，依 C1→C5 <b>強制順序</b>執行，不允許跳步或並行。硬性限制：C1 未完成不得寫 final dataset，C3 未完成不得潤稿結果段。</p>
+      <div class="skill">
+        <div class="skill-name">manuscript-review</div>
+        <p>把整份投稿包做 cross-file 版本一致性稽核，確保所有下游數字都能追溯到鎖定的源資料集。</p>
+      </div>
+      <div class="cflow">
+        <div class="cstep"><b>C1</b><span>鎖定 dataset · 計數稽核</span></div>
+        <div class="cstep"><b>C2</b><span>重建 PRISMA · checklist</span></div>
+        <div class="cstep"><b>C3</b><span>同一 script 重跑分析</span></div>
+        <div class="cstep"><b>C4</b><span>清理 high-risk claims</span></div>
+        <div class="cstep"><b>C5</b><span>投稿包同步稽核</span></div>
+      </div>
+      <div class="triggers" style="margin-top:1rem">
+        <span class="trig">幫我修稿</span>
+        <span class="trig">稿件 ready 了嗎</span>
+        <span class="trig">C1 dataset lock</span>
+        <span class="trig">投稿包準備</span>
+        <span class="trig">claim 清理</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="connector"></div>
+
+  <!-- 8 OUTPUT -->
+  <section class="stage">
+    <div class="stage-head">
+      <div class="num">8</div>
+      <div class="stage-titles">
+        <div class="phase">Deliverables · 輔助產出</div>
+        <h2>最終交付檔案</h2>
+      </div>
+      <div class="tag aux">公用</div>
+    </div>
+    <div class="stage-body">
+      <p class="stage-desc">產出投稿檔案時搭配使用的公用 skill：Word 稿件與 Track Changes、資料集與統計表、轉檔表單、簡報。</p>
+      <div class="triggers">
+        <span class="trig">docx — Word 稿件 / 追蹤修訂</span>
+        <span class="trig">xlsx — 資料集 / 統計表</span>
+        <span class="trig">pdf — 轉檔 / 表單</span>
+        <span class="trig">pptx — 研究簡報</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <div class="foot-grid">
+    <p class="foot-note">本頁僅整理與研究工作流相關的 skill。帳號內另掛載 sales／marketing／finance／data／design 等商業領域 plugin，與 SR／統合分析無關，故未列入。</p>
+    <p class="foot-mark">— 逐關推進，數字可溯。</p>
+  </div>
+</footer>
+
+</body>
+</html>
